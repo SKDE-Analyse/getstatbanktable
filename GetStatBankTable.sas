@@ -194,7 +194,7 @@ data _null_;
 run;
 
 * Import the metadata for the table;
-filename sbmeta url "&url_complete." encoding="&encoding.";
+filename sbmeta url "&url_complete." encoding="&encoding." proxy="http://www-proxy.helsenord.no:8080";
 
 * Check if the table exists;
 %let table_exist=0;
@@ -586,7 +586,7 @@ run;
      put jsoncode;
     run;  
     filename csv_&i temp;
-    proc http in=json out=csv_&i. url="&url_complete." method="post";
+    proc http in=json out=csv_&i. url="&url_complete." method="post" proxyhost="http://www-proxy.helsenord.no" proxyport=8080;
     run; 
 
     * If more than 30 requests in a minute Statbank will refuse more queries for a while. Hence we add some wait time;
@@ -688,7 +688,7 @@ run;
    put jsoncode;
   run;
   filename csv_1 temp encoding="&encoding.";
-  proc http in=json out=csv_1 url="&url_complete." method="post";
+  proc http in=json out=csv_1 url="&url_complete." method="post" proxyhost="http://www-proxy.helsenord.no" proxyport=8080;
   run; 
 
  filename inputprg temp;
